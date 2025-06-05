@@ -80,6 +80,18 @@
     display: block;
     margin-top: 10px;
   }
+
+  @media (max-width: 600px) {
+    .ranking-header-row,
+    .ranking-row {
+      grid-template-columns: 30px 1fr 80px;
+      font-size: 14px;
+    }
+
+    .ranking-score {
+      font-size: 12px;
+    }
+  }
   
   /* Medallas */
   .gold .ranking-pos::before {
