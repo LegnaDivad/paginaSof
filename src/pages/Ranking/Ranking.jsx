@@ -6,6 +6,7 @@ import Layout from '../../components/Layout/Layout';
 import EncabezadoRanking from '../../components/EncabezadoRanking/EncabezadoRanking';
 import ListaMiembrosAnimada from '../../components/ListaMiembrosAnimada/ListaMiembrosAnimada';
 import ResumenRankingDerecha from '../../components/ResumenRankingDerecha/ResumenRankingDerecha';
+import PodiumRanking from '../../components/PodiumRanking/PodiumRanking';
 import MotionReveal from '../../components/animations/MotionReveal';
 
 const miembros = [
@@ -80,6 +81,10 @@ const Ranking = () => {
         </MotionReveal>
 
         <MotionReveal index={4}>
+          <PodiumRanking miembros={miembros.slice(0, 3)} />
+        </MotionReveal>
+
+        <MotionReveal index={5}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 4 }}>
             <ListaMiembrosAnimada miembros={miembros} />
             <ResumenRankingDerecha miembros={miembros} />
