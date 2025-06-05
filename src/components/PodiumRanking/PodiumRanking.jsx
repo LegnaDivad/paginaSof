@@ -31,23 +31,31 @@ const PodiumRanking = ({ miembros }) => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: idx * 0.2 + 0.5 }}
+              whileHover={{ scale: 1.1 }}
             >
               <Avatar sx={{ bgcolor: '#ccc', width: 48, height: 48, mb: 1 }} />
             </motion.div>
-            <motion.div
-              className="podium-bar"
-              style={{ backgroundColor: colores[idx] }}
-              initial={{ height: 0 }}
-              animate={{ height: altura }}
-              transition={{ duration: 0.6, delay: idx * 0.2 }}
-              whileHover={{ scale: 1.05 }}
-            />
-            <Typography
-              variant="body2"
-              sx={{ mt: 1, fontWeight: 500, textAlign: 'center' }}
-            >
-              {m.nombre}
-            </Typography>
+            <Box className="bar-wrapper">
+              <motion.div
+                className="podium-bar"
+                style={{
+                  background: `linear-gradient(to top, rgba(255,255,255,0.4), ${
+                    colores[idx]
+                  })`,
+                }}
+                initial={{ height: 0 }}
+                animate={{ height: altura }}
+                transition={{ duration: 0.6, delay: idx * 0.2 }}
+                whileHover={{ scale: 1.05 }}
+              />
+              <Typography
+                className="podium-name"
+                variant="body2"
+                sx={{ fontWeight: 500, textAlign: 'center' }}
+              >
+                {m.nombre}
+              </Typography>
+            </Box>
           </Box>
         );
       })}
