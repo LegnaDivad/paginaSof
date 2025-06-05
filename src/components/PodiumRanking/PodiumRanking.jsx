@@ -14,7 +14,12 @@ const PodiumRanking = ({ miembros }) => {
         if (!m) return null;
         const altura = m.porcentaje * 1.5;
         return (
-          <Box key={m.nombre} className="podium">
+          <Box
+            key={m.nombre}
+            className="podium"
+            component={motion.div}
+            whileHover={{ y: -6 }}
+          >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -35,8 +40,12 @@ const PodiumRanking = ({ miembros }) => {
               initial={{ height: 0 }}
               animate={{ height: altura }}
               transition={{ duration: 0.6, delay: idx * 0.2 }}
+              whileHover={{ scale: 1.05 }}
             />
-            <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
+            <Typography
+              variant="body2"
+              sx={{ mt: 1, fontWeight: 500, textAlign: 'center' }}
+            >
               {m.nombre}
             </Typography>
           </Box>
