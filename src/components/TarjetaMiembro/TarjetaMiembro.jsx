@@ -1,72 +1,74 @@
 import React from 'react';
-import { Card, CardContent, Box, Typography, Avatar, IconButton } from '@mui/material';
+import { Card, CardContent, Box, Typography, Avatar, IconButton, LinearProgress } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { motion } from 'framer-motion';
 
-const generarMiembros = () => {
-  const nombres = ['Ana', 'Luis', 'Carlos', 'Valeria', 'Marcos', 'Sofía', 'Elena'];
-  return Array.from({ length: 6 }, (_, i) => ({
-    nombre: nombres[Math.floor(Math.random() * nombres.length)],
-    porcentaje: Math.floor(Math.random() * 40) + 60,
-    medalla: ['🥇', '🥈', '🥉'][i] || '',
-    destacado: i === 0
-  }));
-};
-
-const TarjetaMiembro = () => {
-  const miembros = generarMiembros();
-
+const TarjetaMiembro = ({ miembro, index }) => {
   return (
-    <Box sx={{ maxWidth: '70%', mr: 'auto' }}>
-      {miembros.map((miembro, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.2, duration: 0.5 }}
-        >
-          <Card
-            variant="outlined"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.2, duration: 0.5 }}
+      style={{ marginBottom: '16px' }}
+    >
+      <Card
+        variant="outlined"
+        sx={{
+          width: '100%',
+          borderColor: miembro.destacado ? 'orange' : '#e0e0e0',
+          boxShadow: miembro.destacado ? '0 0 12px rgba(255,165,0,0.3)' : '',
+          borderWidth: miembro.destacado ? '2px' : '1px',
+          backgroundColor: miembro.destacado ? '#fffdf7' : '#fff'
+        }}
+      >
+        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Typography
+            fontSize="1.8rem"
             sx={{
-              mb: 2,
-              width: '100%',
-              borderColor: miembro.destacado ? 'orange' : '#e0e0e0',
-              boxShadow: miembro.destacado ? '0 0 12px rgba(255,165,0,0.3)' : '',
-              borderWidth: miembro.destacado ? '2px' : '1px',
-              backgroundColor: miembro.destacado ? '#fffdf7' : '#fff',
+              color:
+                miembro.medalla === '🥇'
+                  ? '#FFD700'
+                  : miembro.medalla === '🥈'
+                  ? '#C0C0C0'
+                  : miembro.medalla === '🥉'
+                  ? '#CD7F32'
+                  : 'inherit'
             }}
           >
-            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Typography fontSize="1.8rem" sx={{
-                color:
-                  miembro.medalla === '🥇' ? '#FFD700' :
-                  miembro.medalla === '🥈' ? '#C0C0C0' :
-                  miembro.medalla === '🥉' ? '#CD7F32' :
-                  'inherit'
-              }}>
-                {miembro.medalla}
+            {miembro.medalla}
+          </Typography>
+          <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar sx={{ mr: 2, bgcolor: '#ccc' }} />
+              <Typography fontWeight={miembro.destacado ? 'bold' : 'normal'}>
+                {miembro.nombre}
               </Typography>
-              <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar sx={{ mr: 2, bgcolor: '#ccc' }} />
-                  <Typography fontWeight={miembro.destacado ? 'bold' : 'normal'}>
-                    {miembro.nombre}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography variant="h6" sx={{ mr: 1 }}>
-                    {miembro.porcentaje}%
-                  </Typography>
-                  <IconButton>
-                    <ArrowForwardIosIcon fontSize="small" />
-                  </IconButton>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
-    </Box>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 120 }}>
+              <Typography variant="body2" sx={{ width: 32 }}>
+                {miembro.porcentaje}%
+              </Typography>
+              <LinearProgress
+                variant="determinate"
+                value={miembro.porcentaje}
+                sx={{
+                  flexGrow: 1,
+                  height: 8,
+                  borderRadius: 5,
+                  backgroundColor: '#f1f5f9',
+                  '& .MuiLinearProgress-bar': {
+                    backgroundImage: 'linear-gradient(90deg,#E54EB5,#FEB101)'
+                  }
+                }}
+              />
+              <IconButton size="small">
+                <ArrowForwardIosIcon fontSize="inherit" />
+              </IconButton>
+            </Box>
+          </Box>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 

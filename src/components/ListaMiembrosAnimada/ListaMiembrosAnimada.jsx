@@ -3,16 +3,11 @@
 import React from 'react';
 import TarjetaMiembro from '../TarjetaMiembro/TarjetaMiembro';
 
-const ListaMiembrosAnimada = ({ miembros, medalla }) => {
+const ListaMiembrosAnimada = ({ miembros }) => {
   return (
     <>
       {miembros.map((miembro, index) => (
-        <TarjetaMiembro
-          key={index}
-          index={index}
-          miembro={miembro}
-          medalla={medalla}
-        />
+        <TarjetaMiembro key={index} index={index} miembro={miembro} />
       ))}
     </>
   );
