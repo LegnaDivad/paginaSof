@@ -1,0 +1,92 @@
+/* src/pages/Eventos/Eventos.css */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.eventos-container {
+  padding-bottom: 50px;
+}
+.carousel-wrapper {
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+}
+
+.speaker-card {
+  min-width: 250px;
+  max-width: 250px;
+  height: 420px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.speaker-card:hover {
+  transform: translateY(-6px);
+}
+
+.speaker-img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.speaker-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.speaker-desc {
+  font-size: 0.9rem;
+  line-height: 1.3rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.speaker-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.speaker-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite ease-in-out;
+}

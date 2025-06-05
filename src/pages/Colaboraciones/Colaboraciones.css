@@ -1,0 +1,291 @@
+.colaboraciones-header {
+  padding-bottom: 10px;
+}
+
+/* CARRUSEL */
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+  max-height: 180px;
+  max-width: 100%;
+}
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  animation: scrollLoop 40s linear infinite;
+  min-width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+.carousel-wrapper:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* TARJETAS DE USUARIO */
+.user-card {
+  flex: 0 0 auto;
+  width: 120px;
+  height: 140px;
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  outline: none;
+}
+
+.user-card:focus {
+  box-shadow: 0 0 0 3px #FF004C;
+}
+
+.user-icon {
+  font-size: 36px;
+  background: white;
+  border-radius: 50%;
+  padding: 6px;
+  margin-bottom: 8px;
+  color: inherit;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.follow-btn {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-weight: bold;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 14px;
+}
+
+.follow-btn:hover {
+  background: #eee;
+}
+
+/* INPUT + BOTÓN */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.search-container .MuiTextField-root {
+  flex: 1;
+  max-width: 700px;
+}
+
+/* SECCIÓN DE PROYECTOS */
+.proyectos-section {
+  margin-top: 40px;
+}
+
+.proyectos-tabs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: font-weight 0.2s, border-bottom 0.2s;
+  user-select: none;
+}
+
+.tab.active {
+  font-weight: 700;
+  border-bottom: 2px solid #000;
+}
+
+.filter-button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #000;
+  padding: 6px 10px;
+  user-select: none;
+  font-family: inherit;
+}
+
+.filter-button:hover {
+  text-decoration: underline;
+}
+
+.proyecto-card {
+  max-width: 800px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  text-align: left;
+}
+
+/* ANIMACIONES */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeInLeft 0.6s ease forwards;
+}
+
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: fadeInRight 0.6s ease forwards;
+}
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* LAYOUT DE TEXTO Y BOTONES EN TARJETAS */
+.proyecto-info {
+  flex: 1 1 auto;
+  min-width: 200px;
+  max-width: 60%;
+}
+
+.proyecto-info h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.proyecto-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+  max-width: 600px;
+}
+
+.proyecto-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+/* RESPONSIVE ADAPTATION */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    max-height: 160px;
+    padding: 10px 0;
+  }
+
+  .user-card {
+    width: 100px;
+    height: 120px;
+  }
+
+  .proyecto-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .proyecto-info {
+    max-width: 100%;
+  }
+
+  .proyecto-actions {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    max-height: 120px;
+    padding: 5px 0;
+  }
+
+  .user-card {
+    width: 80px;
+    height: 100px;
+  }
+
+  .proyecto-card {
+    padding: 12px;
+  }
+
+  .proyecto-info h3 {
+    font-size: 16px;
+  }
+
+  .proyecto-info p {
+    font-size: 12px;
+  }
+
+  .follow-btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+.fade-in-header {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUpHeader 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUpHeader {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
