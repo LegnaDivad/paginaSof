@@ -1,24 +1,37 @@
-import { createClient } from "@supabase/supabase-js";
+// Minimal local storage based replacements for Supabase database helpers
+const DB_KEY = 'local-db';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+function getDB() {
+  return JSON.parse(localStorage.getItem(DB_KEY) || '{}');
+}
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+function saveDB(db) {
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+}
 
 export const updateRecord = async (table, data, where) => {
-  await supabase.from(table).update(data).match(where);
+  const db = getDB();
+  db[table] = db[table] || [];
+  db[table] = db[table].map((r) => {
+    const match = Object.keys(where).every((k) => r[k] === where[k]);
+    return match ? { ...r, ...data } : r;
+  });
+  saveDB(db);
 };
 
 export const getTable = async (table) => {
-  const { data } = await supabase.from(table).select();
-  return data;
+  const db = getDB();
+  return db[table] || [];
 };
 
 export const getRecord = async (table, id, value) => {
-  const { data } = await supabase.from(table).select().eq(id, value);
-  return data?.[0];
+  const records = await getTable(table);
+  return records.find((r) => r[id] === value);
 };
 
 export const createRecord = async (table, data) => {
-  await supabase.from(table).insert(data);
+  const db = getDB();
+  db[table] = db[table] || [];
+  db[table].push(data);
+  saveDB(db);
 };

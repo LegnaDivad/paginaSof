@@ -1,18 +1,61 @@
-import { createClient } from '@supabase/supabase-js';
+// Local stub for Supabase client to allow offline usage
+// Stores a fake session in localStorage and provides minimal auth methods
 
-const supabaseUrl =import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-// const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const EVENT_NAME = 'local-auth-change';
 
-// 👇 Logs para depurar
-console.log('✅ SUPABASE URL:', supabaseUrl);
-console.log('✅ SUPABASE KEY:', supabaseAnonKey ? '[CLAVE DETECTADA]' : '❌ NO DETECTADA');
-
-// Si faltan valores, lanza error para que no avance
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("❌ Faltan variables de entorno VITE_SUPABASE_URL o VITE_SUPABASE_ANON_KEY");
+function getSession() {
+  const raw = localStorage.getItem('session');
+  return raw ? JSON.parse(raw) : null;
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+function setSession(session) {
+  if (session) {
+    localStorage.setItem('session', JSON.stringify(session));
+  } else {
+    localStorage.removeItem('session');
+  }
+  window.dispatchEvent(new Event(EVENT_NAME));
+}
+
+export const supabase = {
+  auth: {
+    async getSession() {
+      return { data: { session: getSession() } };
+    },
+    async getUser() {
+      return { data: { user: getSession()?.user || null } };
+    },
+    async signOut() {
+      setSession(null);
+      return { error: null };
+    },
+    async signInWithOAuth() {
+      const user = {
+        email: 'offline@example.com',
+        user_metadata: { name: 'Usuario Local' },
+      };
+      setSession({ user });
+      return { data: { user }, error: null };
+    },
+    async signUp({ email }) {
+      const user = { email, user_metadata: { name: email.split('@')[0] } };
+      setSession({ user });
+      return { error: null };
+    },
+    onAuthStateChange(callback) {
+      const handler = () => {
+        callback('LOCAL', { user: getSession()?.user || null });
+      };
+      window.addEventListener(EVENT_NAME, handler);
+      return {
+        data: {
+          subscription: {
+            unsubscribe: () => window.removeEventListener(EVENT_NAME, handler),
+          },
+        },
+      };
+    },
+  },
+};
 
 export default supabase;
